@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagrama de Aplicación SPA</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h2>Diagrama de flujo de acceso a una SPA</h2>
+    <div class="mermaid">
+        graph TD
+            A[Usuario] --> B[Accede a la aplicación de notas SPA en el navegador]
+            B --> C[Servidor]
+            C -->|HTML + JS| D[Cliente: Renderiza la estructura SPA]
+            D --> E[Usuario interactúa con la interfaz]
+            E --> F{¿Se necesita comunicación con la API?}
+            F -->|Sí| G[Envía solicitud a la API]
+            F -->|No| H[Actualiza la interfaz localmente]
+            G --> I[Servidor API responde con datos en JSON]
+            I --> H
+    </div>
+</body>
+</html>
