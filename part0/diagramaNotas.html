@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Notas de Examen</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #notaDisplay { margin-top: 20px; font-size: 18px; color: green; }
+        .nota-item { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h2>Registro de Notas de Examen</h2>
+    <input type="number" id="notaInput" placeholder="Escribe la nota" />
+    <button onclick="guardarNota()">Guardar</button>
+
+    <div id="notaDisplay"></div>
+
+    <script>
+        function guardarNota() {
+            const nota = document.getElementById("notaInput").value;
+            if (nota !== "") {
+                let notas = JSON.parse(localStorage.getItem("notasExamen")) || [];
+                notas.push(nota);
+                localStorage.setItem("notasExamen", JSON.stringify(notas));
+                document.getElementById("notaInput").value = "";
+                mostrarNotas();
+            } else {
+                alert("Por favor, introduce una nota.");
+            }
+        }
+        function mostrarNotas() {
+            const notas = JSON.parse(localStorage.getItem("notasExamen")) || [];
+            const notaDisplay = document.getElementById("notaDisplay");
+            notaDisplay.innerHTML = "";
+            notas.forEach((nota, index) => {
+                const notaElement = document.createElement("div");
+                notaElement.className = "nota-item";
+                notaElement.innerText = `Nota ${index + 1}: ${nota}`;
+                notaDisplay.appendChild(notaElement);
+            });
+        }
+        window.onload = function() {
+            mostrarNotas();
+        }
+    </script>
+</body>
+</html>
