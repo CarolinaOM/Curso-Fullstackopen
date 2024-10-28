@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagrama de Aplicación SPA</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h2>Diagrama de Creación de Nota en una SPA</h2>
+    <div class="mermaid">
+        graph TD
+        A[Usuario] --> B[Escribe una nueva nota en el campo de entrada]
+        B --> C[Hace clic en "Guardar"]
+        C --> D[SPA maneja el evento de "Guardar"]
+        D --> E{¿Validación completada?}
+        E -->|Sí| F[SPA envía una solicitud POST al servidor API]
+        E -->|No| G[Muestra mensaje de error]
+        F --> H[Servidor API recibe la nota y la guarda en la base de datos]
+        H --> I[Servidor API responde con confirmación y datos actualizados en JSON]
+        I --> J[SPA recibe la respuesta y actualiza la lista de notas]
+        J --> K[Usuario ve la nota recién creada en la pantalla]
+    </div>
+</body>
+</html>
