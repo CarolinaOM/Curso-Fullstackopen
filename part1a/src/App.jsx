@@ -1,137 +1,146 @@
 import PropTypes from 'prop-types';
 
-// 1. Componentes
-/*const App = () => (
-  <div>
-    <p>Hello world</p>
-  </div>
-)
-  
-const App = () => {
-  console.log('Hello from component')
+//1.1: Información del Curso, paso 1
+
+/*const Header = ({ course }) => {
+  return <h1>{course}</h1>;
+};
+
+Header.propTypes = {
+  course: PropTypes.string.isRequired,
+};
+
+const Part = ({ name, exercises }) => {
   return (
-    <div>
-      <p>Hello world</p>
-    </div>
-  )
-}
-
-export default App
-
-const App = () => {
-  const now = new Date()
-  const a = 10
-  const b = 20
-  console.log(now, a+b)
-
-  return (
-    <div>
-      <p>Hello world, it is {now.toString()}</p>
-      <p>
-        {a} plus {b} is {a + b}
-      </p>
-    </div>
-  )
-}
-
-export default App*/
-
-// 2. JSK
-
-/*const App = () => {
-  const now = new Date()
-  const a = 10
-  const b = 20
-  return React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'p', null, 'Hello world, it is ', now.toString()
-    ),
-    React.createElement(
-      'p', null, a, ' plus ', b, ' is ', a + b
-    )
-  )
-}
-
-export default App*/
-
-// 4. Componentes múltiples
-
-/*const Hello = () => {
-  return (
-    <div>
-      <p>Hello world</p>
-    </div>
-  )
-}
-
-const App = () => {
-  return (
-    <div>
-      <h1>Greetings</h1>
-
-      <Hello />
-    </div>
-  )
-}
-
-export default App*/
-
-// 4. props: pasar datos a componentes
-
-/*const Hello = (props) => {
-  return (
-    <div>
-      <p>Hello {props.name}</p>
-    </div>
+    <p>
+      {name} {exercises}
+    </p>
   );
 };
 
-Hello.propTypes = {
-  name: PropTypes.string.isRequired, 
-};
-
-const App = () => {
-  return (
-    <div>
-      <h1>Greetings</h1>
-      <Hello name='George' />
-      <Hello name='Daisy' />
-    </div>
-  );
-};
-
-export default App*/
-
-
-/*const Hello = (props) => {
-  console.log(props);
-  return (
-    <div>
-      <p>
-        Hello {props.name}, you are {props.age} years old
-      </p>
-    </div>
-  );
-};
-
-Hello.propTypes = {
+Part.propTypes = {
   name: PropTypes.string.isRequired,
-  age: PropTypes.number.isRequired   
+  exercises: PropTypes.number.isRequired,
 };
 
-const App = () => {
-  const name = 'Peter';
-  const age = 10;
-
+const Content = ({ parts }) => {
   return (
     <div>
-      <h1>Greetings</h1>
-      <Hello name='Maya' age={26 + 10} />
-      <Hello name={name} age={age} />
+      {parts.map((part, index) => (
+        <Part key={index} name={part.name} exercises={part.exercises} />
+      ))}
     </div>
   );
 };
 
-export default App;*/
+Content.propTypes = {
+  parts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      exercises: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
+
+const Total = ({ parts }) => {
+  const totalExercises = parts.reduce((sum, part) => sum + part.exercises, 0);
+  return <p>Number of exercises {totalExercises}</p>;
+};
+
+Total.propTypes = {
+  parts: PropTypes.arrayOf(
+    PropTypes.shape({
+      exercises: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
+
+const App = () => {
+  const course = 'Half Stack application development';
+  const parts = [
+    { name: 'Fundamentals of React', exercises: 10 },
+    { name: 'Using props to pass data', exercises: 7 },
+    { name: 'State of a component', exercises: 14 }
+  ];
+
+  return (
+    <div>
+      <Header course={course} />
+      <Content parts={parts} />
+      <Total parts={parts} />
+    </div>
+  );
+};*/
+
+//1.2: Información del Curso, paso 2
+const Header = ({ course }) => {
+  return <h1>{course}</h1>;
+};
+
+Header.propTypes = {
+  course: PropTypes.string.isRequired,
+};
+
+const Part = ({ name, exercises }) => {
+  return (
+    <p>
+      {name} {exercises}
+    </p>
+  );
+};
+
+Part.propTypes = {
+  name: PropTypes.string.isRequired,
+  exercises: PropTypes.number.isRequired,
+};
+
+const Content = ({ parts }) => {
+  return (
+    <div>
+      <Part name={parts[0].name} exercises={parts[0].exercises} />
+      <Part name={parts[1].name} exercises={parts[1].exercises} />
+      <Part name={parts[2].name} exercises={parts[2].exercises} />
+    </div>
+  );
+};
+
+Content.propTypes = {
+  parts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      exercises: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
+
+const Total = ({ parts }) => {
+  const totalExercises = parts.reduce((sum, part) => sum + part.exercises, 0);
+  return <p>Number of exercises {totalExercises}</p>;
+};
+
+Total.propTypes = {
+  parts: PropTypes.arrayOf(
+    PropTypes.shape({
+      exercises: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
+
+const App = () => {
+  const course = 'Half Stack application development';
+  const parts = [
+    { name: 'Fundamentals of React', exercises: 10 },
+    { name: 'Using props to pass data', exercises: 7 },
+    { name: 'State of a component', exercises: 14 }
+  ];
+
+  return (
+    <div>
+      <Header course={course} />
+      <Content parts={parts} />
+      <Total parts={parts} />
+    </div>
+  );
+};
+
+export default App;
